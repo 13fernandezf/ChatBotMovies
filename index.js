@@ -12,7 +12,8 @@ var port = process.env.PORT || 8080;
 const server = express();
 server.use(bodyParser.json());
 server.post('/getMovies',function (request,response)  {
-    if(request.body.result.parameters.movies_occurence == "top rated") {
+    console.log(request.body);
+    if(request.body.queryResult.parameters.movies_occurence == "top rated") {
         var req = unirest("GET", "https://api.themoviedb.org/3/movie/top_rated");
             req.query({
                 "page": "1",
@@ -41,7 +42,7 @@ server.post('/getMovies',function (request,response)  {
                     })); 
                 }
             });
-    } else if(request.body.result.parameters.movies_name) {
+    } else if(request.body.queryResult.parameters.movies_name) {
      //   console.log('popular-movies param found');
         let movie = request.body.result.parameters.movies_name;
         var req = unirest("GET", "https://api.themoviedb.org/3/search/movie");
@@ -78,35 +79,6 @@ server.post('/getMovies',function (request,response)  {
                 }
             });
 
-    } else if(request.body.result.parameters['popular-movies']) {    
-        var req = unirest("GET", "https://api.themoviedb.org/3/movie/popular");
-            req.query({
-                "page": "1",
-                "language": "en-US",
-                "api_key": ""
-            });
-            req.send("{}");
-            req.end(function(res){
-                if(res.error) {
-                    response.setHeader('Content-Type', 'application/json');
-                    response.send(JSON.stringify({
-                        "speech" : "Error. Can you try it again ? ",
-                        "displayText" : "Error. Can you try it again ? "
-                    }));
-                } else {
-                    let result = res.body.results;
-                    let output = '';
-                    for(let i = 0; i < result.length;i++) {
-                        output += result[i].title;
-                        output+="\n"
-                    }
-                    response.setHeader('Content-Type', 'application/json');
-                    response.send(JSON.stringify({
-                        "speech" : output,
-                        "displayText" : output
-                    })); 
-                }
-            });
     }
 });
 server.get('/getName',function (req,res){
