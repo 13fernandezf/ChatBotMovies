@@ -11,28 +11,22 @@ var port = process.env.PORT || 8080;
 // create serve and configure it.
 const server = express();
 server.use(bodyParser.json());
-server.post('/getMovies',function (request,response)  {
-  console.log('toto');
-
-    console.log(request.body);
-    if(request.body.queryResult.parameters.movies_occurence == "top rated") {
-      let response = "This is a sample response from your webhook!";//Default response from the webhook to show it’s working
-      let responseObj= {
-          "fulfillmentText":response,
-          "fulfillmentMessages":[
-              {
-                  "text": {
-                      "text": [
-                          "Hello I m Responding to intent"
-                      ]
-                  }
-              }
-          ],
-          "source":""
-      }
+server.post('/getMovies',function (req,res)  {
+    let response = "This is a sample response from your webhook!";//Default response from the webhook to show it’s working
+    let responseObj={
+         "fulfillmentText":response
+        ,"fulfillmentMessages":[
+            {
+                "text": {
+                    "text": [
+                        "Hello I m Responding to intent"
+                    ]
+                }
+            }
+        ]
+        ,"source":""
     }
-    return res.json(responseObj);
-});
+    return res.json(responseObj);});
 server.get('/getName',function (req,res){
     res.send('Florian Fernandez');
 });
