@@ -16,71 +16,10 @@ server.post('/getMovies',function (request,response)  {
 
     console.log(request.body);
     if(request.body.queryResult.parameters.movies_occurence == "top rated") {
-        var req = unirest("GET", "https://api.themoviedb.org/3/movie/top_rated");
-            req.query({
-                "page": "1",
-                "language": "en-US",
-                "api_key": ""
-            });
-            req.send("{}");
-            req.end(function(res) {
-                if(res.error) {
-                    response.setHeader('Content-Type', 'application/json');
-                    response.send(JSON.stringify({
-                        "speech" : "Error. Can you try it again ? ",
-                        "displayText" : "Error. Can you try it again ? "
-                    }));
-                } else if(res.body.results.length > 0) {
-                    let result = res.body.results;
-                    let output = '';
-                    for(let i = 0; i<result.length;i++) {
-                        output += result[i].title;
-                        output+="\n"
-                    }
-                    response.setHeader('Content-Type', 'application/json');
-                    response.send(JSON.stringify({
-                        "speech" : output,
-                        "displayText" : output
-                    })); 
-                }
-            });
-    } else if(request.body.queryResult.parameters.movies_name) {
-     //   console.log('popular-movies param found');
-        let movie = request.body.result.parameters.movies_name;
-        var req = unirest("GET", "https://api.themoviedb.org/3/search/movie");
-            req.query({
-                "include_adult": "false",
-                "page": "1",
-                "query":movie,
-                "language": "en-US",
-                "api_key": ""
-            });
-            req.send("{}");
-            req.end(function(res) {
-                if(res.error) {
-                    response.setHeader('Content-Type', 'application/json');
-                    response.send(JSON.stringify({
-                        "speech" : "Error. Can you try it again ? ",
-                        "displayText" : "Error. Can you try it again ? "
-                    }));
-                } else if(res.body.results.length > 0) {
-                let result = res.body.results[0];
-                let output = "Average Rating : " + result.vote_average + 
-                "\n Plot : " + result.overview + "url" + result.poster_path
-                    response.setHeader('Content-Type', 'application/json');
-                    response.send(JSON.stringify({
-                        "speech" : output,
-                        "displayText" : output
-                    }));
-                } else {
-                    response.setHeader('Content-Type', 'application/json');
-                    response.send(JSON.stringify({
-                        "speech" : "Couldn't find any deatails. :(  ",
-                        "displayText" : "Couldn't find any deatails. :(  "
-                    }));
-                }
-            });
-
+      return response.json({
+        speech: 'Something went wrong!',
+        displayText: 'Something went wrong!',
+      })
     }
 });
 server.get('/getName',function (req,res){
