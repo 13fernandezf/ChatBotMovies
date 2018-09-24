@@ -12,6 +12,8 @@ var port = process.env.PORT || 8080;
 const server = express();
 server.use(bodyParser.json());
 server.post('/getMovies',function (request,response)  {
+  console.log('toto');
+
     console.log(request.body);
     if(request.body.queryResult.parameters.movies_occurence == "top rated") {
         var req = unirest("GET", "https://api.themoviedb.org/3/movie/top_rated");
