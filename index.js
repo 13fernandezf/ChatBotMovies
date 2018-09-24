@@ -12,7 +12,7 @@ var port = process.env.PORT || 8080;
 const server = express();
 server.use(bodyParser.json());
 server.post('/getMovies',function (request,response)  {
-    if(request.body.result.parameters['top-rated']) {
+    if(request.body.result.parameters.movies_occurence == "top rated") {
         var req = unirest("GET", "https://api.themoviedb.org/3/movie/top_rated");
             req.query({
                 "page": "1",
@@ -41,9 +41,9 @@ server.post('/getMovies',function (request,response)  {
                     })); 
                 }
             });
-    } else if(request.body.result.parameters['movie-name']) {
+    } else if(request.body.result.parameters.movies_name) {
      //   console.log('popular-movies param found');
-        let movie = request.body.result.parameters['movie-name'];
+        let movie = request.body.result.parameters.movies_name;
         var req = unirest("GET", "https://api.themoviedb.org/3/search/movie");
             req.query({
                 "include_adult": "false",
