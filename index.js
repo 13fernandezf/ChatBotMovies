@@ -12,21 +12,41 @@ var port = process.env.PORT || 8080;
 const server = express();
 server.use(bodyParser.json());
 server.post('/getMovies',function (req,res)  {
-    let response = "This is a sample response from your webhook!";//Default response from the webhook to show it’s working
-    let responseObj={
-         "fulfillmentText":response
-        ,"fulfillmentMessages":[
-            {
-                "text": {
-                    "text": [
-                        "Hello I m Responding to intent"
-                    ]
-                }
+    var movies = req.queryResult.parameters.movies_name;
+    if(movies){
+      let response = "This is a sample response from your webhook!";//Default response from the webhook to show it’s working
+      var responseObj={
+        "fulfillmentText":response,
+        "fulfillmentMessages":[
+          {
+            "text": {
+              "text": [
+                "Hello vous demandé des informations sur le film " + movies
+              ]
             }
+          }
         ]
         ,"source":""
+      } 
+    } else {
+      var responseObj={
+        "fulfillmentText":response,
+        "fulfillmentMessages":[
+          {
+            "text": {
+              "text": [
+                "Je ne comprends pas votre demaande"
+              ]
+            }
+          }
+        ]
+        ,"source":""
+      } 
     }
-    return res.json(responseObj);});
+
+    return res.json(responseObj);
+
+});
 server.get('/getName',function (req,res){
     res.send('Florian Fernandez');
 });
