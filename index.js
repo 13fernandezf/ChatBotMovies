@@ -12,9 +12,9 @@ var port = process.env.PORT || 8080;
 const server = express();
 server.use(bodyParser.json());
 server.post('/getMovies',function (req,res)  {
-    var movies = req.queryResult.parameters.movies_name;
+    var movies = req.body.queryResult.parameters.movies_name;
     if(movies){
-      let response = "This is a sample response from your webhook!";//Default response from the webhook to show it’s working
+      var response = "This is a sample response from your webhook!";//Default response from the webhook to show it’s working
       var responseObj={
         "fulfillmentText":response,
         "fulfillmentMessages":[
