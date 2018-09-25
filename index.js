@@ -10,8 +10,48 @@ const server = express();
 server.use(bodyParser.json());
 
 server.post('/', function(request,response) {
-  var occurence = request.body.queryResult.parameters.occurence
+  var requestUser = request.body.queryResult.parameters
   var responseObj = {}
+  if(requestUser.banque_subject){
+    responseObj={
+      "fulfillmentMessages":[
+        {
+          "text": {
+            "text": [
+              "Très bien je transmets votre demande à l'équipe support.",
+              "J'ai bien transmit votre demande à l'équipe support.",
+              "Votre demande a bien été transmit à l'équipe support."
+            ]
+          }
+        }
+      ]
+    } 
+  } else {
+    responseObj={
+      "fulfillmentMessages":[
+        {
+          "text": {
+            "text": [
+              "Vous voulez faire une demande à la conciergerie ?",
+              "Si j'ai bien comprit vous voulez faire une demande à la conciergerie ?"
+            ]
+          }
+        }
+      ]
+    } 
+  }
+
+  return response.json(responseObj);
+})
+
+server.get('/getName',function (req,res){
+    res.send('Florian Fernandez');
+})
+server.listen(port, function () {
+    console.log("Server is up and running...");
+})
+
+/**
   if(occurence === 'conciergerie'){
     responseObj={
       "fulfillmentMessages":[
@@ -48,53 +88,5 @@ server.post('/', function(request,response) {
         }
       ]
     }
-  }
-
-  return response.json(responseObj);
-})
-
-server.get('/getName',function (req,res){
-    res.send('Florian Fernandez');
-})
-server.listen(port, function () {
-    console.log("Server is up and running...");
-})
-
-
-
-server.post('/getMoviestest',function (req,res)  {
-  var movies = req.body.queryResult.parameters.movies_name;
-  if(movies){
-    var response = "This is a sample response from your webhook!";//Default response from the webhook to show it’s working
-    var responseObj={
-      "fulfillmentText":response,
-      "fulfillmentMessages":[
-        {
-          "text": {
-            "text": [
-              "Hello vous demandé des informations sur le film " + movies
-            ]
-          }
-        }
-      ]
-      ,"source":""
-    } 
-  } else {
-    var responseObj={
-      "fulfillmentText":response,
-      "fulfillmentMessages":[
-        {
-          "text": {
-            "text": [
-              "Je ne comprends pas votre demaande"
-            ]
-          }
-        }
-      ]
-      ,"source":""
-    } 
-  }
-
-  return res.json(responseObj);
-
-})
+  } 
+ */
