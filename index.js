@@ -10,37 +10,22 @@ const server = express();
 server.use(bodyParser.json());
 
 server.post('/', function(request,response) {
-  var requestUser = request.body.queryResult.parameters
+  var requestUserContext = request.body.queryResult.parameters
+  var requestUserQuery = request.body.queryResult.queryText
   var responseObj = {}
-  if(requestUser.banque_subject){
+  if(requestUserContext.banque_subject){
     responseObj={
       "fulfillmentMessages":[
         {
           "text": {
             "text": [
-              "Très bien je transmets votre demande à l'équipe support.",
-              "J'ai bien transmit votre demande à l'équipe support.",
-              "Votre demande a bien été transmit à l'équipe support."
+              "Très bien je transmets votre demande à l'équipe support. La demande est la suivante : '" + requestUserQuery + "'"
             ]
           }
         }
       ]
     } 
-  } else {
-    responseObj={
-      "fulfillmentMessages":[
-        {
-          "text": {
-            "text": [
-              "Vous voulez faire une demande à la conciergerie ?",
-              "Si j'ai bien comprit vous voulez faire une demande à la conciergerie ?"
-            ]
-          }
-        }
-      ]
-    } 
-  }
-
+  } 
   return response.json(responseObj);
 })
 
@@ -50,43 +35,3 @@ server.get('/getName',function (req,res){
 server.listen(port, function () {
     console.log("Server is up and running...");
 })
-
-/**
-  if(occurence === 'conciergerie'){
-    responseObj={
-      "fulfillmentMessages":[
-        {
-          "text": {
-            "text": [
-              "Si j'ai bien comprit vous souhaitez faire une demande à la conciergerie, quelle est cette demande ?" 
-            ]
-          }
-        }
-      ]
-    } 
-  } else if(occurence === 'support') {
-    responseObj={
-      "fulfillmentMessages":[
-        {
-          "text": {
-            "text": [
-              "Si j'ai bien comprit vous souhaitez faire une demande au support, quelle est cette demande ?" 
-            ]
-          }
-        }
-      ]
-    }
-  } else {
-    responseObj={
-      "fulfillmentMessages":[
-        {
-          "text": {
-            "text": [
-              "Je n'ai pas comprit votre demande, vous souhaitez faire une demande au support ou à la conciergerie ?" 
-            ]
-          }
-        }
-      ]
-    }
-  } 
- */
