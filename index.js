@@ -13,6 +13,7 @@ server.post('/', function(request,response) {
   var requestUserContext = request.body.queryResult.parameters
   var requestUserQuery = request.body.queryResult.queryText
   var responseObj = {}
+  /*
   if(requestUserContext.banque_subject){
     responseObj={
       "fulfillmentMessages":[
@@ -27,6 +28,7 @@ server.post('/', function(request,response) {
     } 
   } 
   return response.json(responseObj);
+  */
 })
 
 server.get('/getName',function (req,res){
