@@ -18,50 +18,11 @@ server.post('/v2/gHook', function(request,response) {
         "fulfillmentText":"Coucou petite perruche 1",
         "fulfillmentMessages":[  
             {  
-                "text":[  
+                text:[  
                     "Coucou petite perruche 3"
-                ],
-      
+                ]
             }
-        ],
-        "source":"example.com",
-        "payload":{  
-            "google":{  
-                "expectUserResponse":true,
-                "richResponse":{  
-                    "items":[  
-                        {  
-                            "simpleResponse":{  
-                                "textToSpeech":"tCoucou petite perruche 2"
-                            }
-                        }
-                    ]
-                }
-            },
-            "facebook":{  
-                "text":"Hello, Facebook!"
-            },
-            "slack":{  
-                "text":"This is a text response for Slack."
-            }
-        },
-        "outputContexts":[  
-            {  
-                "name":session,
-                "lifespanCount":5,
-                "parameters":{  
-                    "param":"param value"
-                }
-            }
-        ],
-        "followupEventInput":{  
-            "name":"event name",
-            "languageCode":"en-FR",
-            "parameters":{  
-                "param":"param value"
-            }
-        }
-      
+        ]
     }
   } 
   return response.json(responseObj);
