@@ -9,20 +9,32 @@ server.use(bodyParser.json());
 server.post('/v2/gHook', function(request,response) {
   var requestUserContext = request.body.queryResult.parameters
   var requestUserQuery = request.body.queryResult.queryText
-  var session = request.body.session;
-  var responseObj = {}
+  var responseObj = {
+    "fulfillmentText":"Très bien je transmets votre demande à la conciergerie.",
+    "fulfillmentMessages":[  
+        {  
+          "text": {
+            "text": [
+              "Très bien je transmets votre demande à la conciergerie."
+            ]
+          }
+        }
+    ]
+  }
   
   if(requestUserContext.banque_subject){
     responseObj=
-      {  
-        "fulfillmentText":"Coucou petite perruche 1",
-        "fulfillmentMessages":[  
-            {  
-                text:[  
-                    "Coucou petite perruche 3"
-                ]
+    {  
+      "fulfillmentText":"Très bien je transmets votre demande à l'équipe support.",
+      "fulfillmentMessages":[  
+          {  
+            "text": {
+              "text": [
+                "Très bien je transmets votre demande à l'équipe support."
+              ]
             }
-        ]
+          }
+      ]
     }
   } 
   return response.json(responseObj);
@@ -35,3 +47,4 @@ server.get('/getName',function (req,res){
 server.listen(port, function () {
     console.log("Server is up and running...");
 })
+
