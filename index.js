@@ -9,18 +9,8 @@ server.use(bodyParser.json());
 server.post('/v2/gHook', function(request,response) {
   var requestUserContext = request.body.queryResult.parameters
   var requestUserQuery = request.body.queryResult.queryText
-  var responseObj = {
-    "fulfillmentText":"Très bien je transmets votre demande à la conciergerie.",
-    "fulfillmentMessages":[  
-        {  
-          "text": {
-            "text": [
-              "Très bien je transmets votre demande à la conciergerie."
-            ]
-          }
-        }
-    ]
-  }
+  var requestAction = request.body.queryResult.action
+  var responseObj = {}
   
   if(requestUserContext.banque_subject){
     responseObj=
@@ -38,7 +28,6 @@ server.post('/v2/gHook', function(request,response) {
     }
   } 
   return response.json(responseObj);
-
 })
 
 server.get('/getName',function (req,res){
